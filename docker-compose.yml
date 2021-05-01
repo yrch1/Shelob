@@ -1,0 +1,37 @@
+services:
+  yukio:
+    container_name: yukio
+    depends_on:
+      - chrome
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: yrch1/shelob:latest
+    links:
+      - hub
+  hub:
+    container_name: rivendel
+    image: selenium/hub
+    ports:
+      - "4444:4444"
+    environment:
+      GRID_MAX_SESSION: 16
+      GRID_BROWSER_TIMEOUT: 300
+      GRID_TIMEOUT: 300
+
+  chrome:
+    image: selenium/node-chrome
+    container_name: web-automation_chrome
+    depends_on:
+      - hub
+    environment:
+      HUB_PORT_4444_TCP_ADDR: hub
+      HUB_PORT_4444_TCP_PORT: 4444
+      NODE_MAX_SESSION: 4
+      NODE_MAX_INSTANCES: 4
+    volumes:
+      - /dev/shm:/dev/shm
+    ports:
+      - "9001:5900"
+    links:
+      - hub
