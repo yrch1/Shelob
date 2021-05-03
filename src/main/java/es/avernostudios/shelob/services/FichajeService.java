@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class FichajeService {
 
-    @Value("${hubURL}")
+    @Value("${es.avernostudios.hubURL}")
     public String hubURL;
     private WebDriver driver;
 
@@ -88,5 +88,18 @@ public class FichajeService {
             log.error("Exception", e);
         }
         close();
+    }
+
+    public void init(WebDriver driver) {
+        try {
+            driver.manage()
+                    .timeouts()
+                    .implicitlyWait(10, TimeUnit.SECONDS);
+
+            log.info("Connecting to " + hubURL);
+
+        } catch (Exception e) {
+            log.error("Exception", e);
+        }
     }
 }

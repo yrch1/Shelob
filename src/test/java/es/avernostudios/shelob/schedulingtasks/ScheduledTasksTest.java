@@ -9,10 +9,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.time.Duration;
 
 import static org.awaitility.Awaitility.await;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(properties = { "crontabSchedule=*/10 * * * * *"})
+@SpringBootTest(properties = {"es.avernostudios.crontabSchedule=*/10 * * * * *"})
 class ScheduledTasksTest {
 
 

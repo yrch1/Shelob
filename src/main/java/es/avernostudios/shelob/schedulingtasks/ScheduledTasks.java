@@ -18,7 +18,7 @@ import java.util.Date;
 @Slf4j
 public class ScheduledTasks {
 
-    @Value("${crontabSchedule}")
+    @Value("${es.avernostudios.crontabSchedule}")
     public String crontabSchedule;
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -27,7 +27,7 @@ public class ScheduledTasks {
     @Autowired
     FichajeService fichajeService;
 
-    @Scheduled(cron = "${crontabSchedule}")
+    @Scheduled(cron = "${es.avernostudios.crontabSchedule}")
     public void reportCurrentTime() throws MalformedURLException {
         log.info("crontabSchedule: '{}' ", crontabSchedule);
         log.info("The time is now {}", dateFormat.format(new Date()));
