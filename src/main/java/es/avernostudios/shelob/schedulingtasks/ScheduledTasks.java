@@ -3,11 +3,8 @@ package es.avernostudios.shelob.schedulingtasks;
 import es.avernostudios.shelob.services.FichajeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -16,10 +13,7 @@ import java.util.Date;
  */
 @Component
 @Slf4j
-public class ScheduledTasks {
-
-    @Value("${es.avernostudios.crontabSchedule}")
-    public String crontabSchedule;
+public class ScheduledTasks implements Runnable {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
@@ -27,12 +21,9 @@ public class ScheduledTasks {
     @Autowired
     FichajeService fichajeService;
 
-    @Scheduled(cron = "${es.avernostudios.crontabSchedule}")
-    public void reportCurrentTime() throws MalformedURLException {
-        log.info("crontabSchedule: '{}' ", crontabSchedule);
+    @Override
+    public void run() {
         log.info("The time is now {}", dateFormat.format(new Date()));
-
         fichajeService.work();
-
     }
 }

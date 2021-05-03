@@ -25,6 +25,6 @@ class ScheduledTasksTest {
 
         await().atMost(Duration.ofSeconds(25)).untilAsserted(
                 () -> verify(myTask, atLeast(2)
-                ).reportCurrentTime());
+                ).run());
     }
 }

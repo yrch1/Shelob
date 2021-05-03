@@ -3,7 +3,10 @@ package es.avernostudios.shelob.services;
 import es.avernostudios.shelob.components.SeleniumDriverInterface;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,11 @@ public class FichajeServiceImpl implements FichajeService {
 
     @Value("${es.avernostudios.password}")
     String password;
+
+    @Value("${es.avernostudios.url}")
+    String url;
+    @Value("${es.avernostudios.isSandbox}")
+    boolean isSandbox;
 
 
     @PreDestroy
@@ -49,23 +57,49 @@ public class FichajeServiceImpl implements FichajeService {
      */
     @Override
     public boolean work() {
+
+
+        String usernameXpath = "//*[@id=\"body\"]/div[2]/div/input";
+        String salirXpath = "//*[@id=\"body\"]/div[3]";
+        String ficharXpath = "//*[@id=\"body\"]/div[1]";
+        String passwordXpath = "//*[@id=\"body\"]/div[4]/div/input";
+        String entrarXpath = "//*[@id=\"body\"]/div[5]/div";
+
         init();
         boolean result = false;
         try {
-            navigateTo("https://webcollab.sourceforge.io/webcollab/index.php");
-            WebElement username = seleniumDriverInterface.getDriver().findElement(By.id("username"));
-            username.clear();
-            username.sendKeys(username.getText());
-            WebElement password = seleniumDriverInterface.getDriver().findElement(By.xpath("//*[@id=\"single\"]/div[2]/div/div/form/table/tbody/tr[2]/td[2]/input"));
-            password.clear();
-            password.sendKeys(password.getText());
-            clickElement(seleniumDriverInterface.getDriver().findElement(By.xpath("//*[@id=\"single\"]/div[2]/div/div/form/p/input")));
+            navigateTo(url);
 
-            log.info(seleniumDriverInterface.getDriver().getCurrentUrl());
+            WebDriver driver = seleniumDriverInterface.getDriver();
+            WebElement usernameWebElement = driver.findElement(By.xpath(usernameXpath));
+            usernameWebElement.clear();
+            usernameWebElement.sendKeys(username);
+            WebElement passwordWebElement = driver.findElement(By.xpath(passwordXpath));
+            passwordWebElement.clear();
+            passwordWebElement.sendKeys(password);
+            clickElement(driver.findElement(By.xpath(entrarXpath)));
 
-            WebElement dashboardDIV = seleniumDriverInterface.getDriver().findElement(By.id("top"));
-            if (dashboardDIV != null) {
-                log.info(dashboardDIV.getText());
+            log.info(driver.getCurrentUrl());
+
+
+            Thread.sleep(5000);
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+
+            WebElement salirWebElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(salirXpath)));
+
+            WebElement mainActionWebElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(ficharXpath)));
+
+            if (mainActionWebElement != null && salirWebElement != null) {
+                log.info("WebElement {} ", mainActionWebElement.getText());
+
+
+                if (!isSandbox) {
+                    mainActionWebElement.click();
+                } else {
+                    clickElement(salirWebElement);
+                }
+
+
                 result = true;
             }
 
