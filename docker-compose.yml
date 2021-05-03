@@ -9,10 +9,10 @@ services:
       context: .
       dockerfile: Dockerfile
     image: yrch1/shelob:latest
-    links:
-      - hub
+    networks:
+      - rivendel
   hub:
-    container_name: rivendel
+    container_name: selenium_hub
     image: selenium/hub
     ports:
       - "4444:4444"
@@ -35,5 +35,9 @@ services:
       - /dev/shm:/dev/shm
     ports:
       - "9001:5900"
-    links:
-      - hub
+    networks:
+      - rivendel
+
+networks:
+  rivendel:
+    driver: bridge
