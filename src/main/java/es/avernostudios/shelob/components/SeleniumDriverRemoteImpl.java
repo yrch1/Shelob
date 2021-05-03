@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
@@ -25,7 +24,6 @@ public class SeleniumDriverRemoteImpl implements SeleniumDriverInterface {
         return driver;
     }
 
-    @PostConstruct
     @Override
     public void init() {
 
@@ -42,6 +40,11 @@ public class SeleniumDriverRemoteImpl implements SeleniumDriverInterface {
             log.error("Exception", e);
         }
 
+    }
+
+    @Override
+    public void close() {
+        this.driver.quit();
     }
 
 

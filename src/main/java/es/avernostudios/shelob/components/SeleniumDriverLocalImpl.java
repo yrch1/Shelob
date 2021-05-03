@@ -6,8 +6,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-
 
 @Profile("localWebDriver")
 @Component
@@ -21,9 +19,13 @@ public class SeleniumDriverLocalImpl implements SeleniumDriverInterface {
         return this.driver;
     }
 
-    @PostConstruct
     @Override
     public void init() {
         driver = new ChromeDriver();
+    }
+
+    @Override
+    public void close() {
+        this.driver.quit();
     }
 }

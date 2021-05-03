@@ -19,7 +19,6 @@ public class FichajeServiceImpl implements FichajeService {
     SeleniumDriverInterface seleniumDriverInterface;
 
 
-    @Override
     @PreDestroy
     public void destroy() {
         log.debug("Destroying webdriver");
@@ -28,21 +27,11 @@ public class FichajeServiceImpl implements FichajeService {
         }
     }
 
-    @Override
-    public void close() {
-        log.debug("Closing webdriver");
-        if (seleniumDriverInterface.getDriver() != null) {
-            seleniumDriverInterface.getDriver().close();
-        }
-    }
-
-    @Override
     public void navigateTo(String url) {
         seleniumDriverInterface.getDriver().navigate()
                 .to(url);
     }
 
-    @Override
     public void clickElement(WebElement element) {
         element.click();
     }
@@ -53,6 +42,7 @@ public class FichajeServiceImpl implements FichajeService {
      */
     @Override
     public boolean work() {
+        init();
         boolean result = false;
         try {
             navigateTo("https://webcollab.sourceforge.io/webcollab/index.php");
@@ -77,5 +67,18 @@ public class FichajeServiceImpl implements FichajeService {
         }
         close();
         return result;
+    }
+
+    private void init() {
+        if (seleniumDriverInterface != null) {
+            seleniumDriverInterface.init();
+        }
+    }
+
+    private void close() {
+        log.debug("Closing webdriver");
+        if (seleniumDriverInterface.getDriver() != null) {
+            seleniumDriverInterface.getDriver().close();
+        }
     }
 }
