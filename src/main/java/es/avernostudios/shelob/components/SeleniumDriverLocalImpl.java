@@ -28,4 +28,5 @@ public class SeleniumDriverLocalImpl implements SeleniumDriverInterface {
     public void close() {
         this.driver.quit();
     }
+
 }

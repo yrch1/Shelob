@@ -13,4 +13,4 @@ USER shelob:shelob
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} ./shelob.jar
 COPY src/main/resources/application.properties ./
-ENTRYPOINT ["java","-jar","shelob.jar"]
+ENTRYPOINT ["java","-Djasypt.encryptor.password=supersecretz","-jar","shelob.jar"]

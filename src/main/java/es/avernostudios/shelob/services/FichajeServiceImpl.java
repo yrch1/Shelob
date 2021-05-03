@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PreDestroy;
@@ -17,6 +18,12 @@ public class FichajeServiceImpl implements FichajeService {
 
     @Autowired
     SeleniumDriverInterface seleniumDriverInterface;
+
+    @Value("${es.avernostudios.username}")
+    String username;
+
+    @Value("${es.avernostudios.password}")
+    String password;
 
 
     @PreDestroy
@@ -48,10 +55,10 @@ public class FichajeServiceImpl implements FichajeService {
             navigateTo("https://webcollab.sourceforge.io/webcollab/index.php");
             WebElement username = seleniumDriverInterface.getDriver().findElement(By.id("username"));
             username.clear();
-            username.sendKeys("demo");
+            username.sendKeys(username.getText());
             WebElement password = seleniumDriverInterface.getDriver().findElement(By.xpath("//*[@id=\"single\"]/div[2]/div/div/form/table/tbody/tr[2]/td[2]/input"));
             password.clear();
-            password.sendKeys("demo");
+            password.sendKeys(password.getText());
             clickElement(seleniumDriverInterface.getDriver().findElement(By.xpath("//*[@id=\"single\"]/div[2]/div/div/form/p/input")));
 
             log.info(seleniumDriverInterface.getDriver().getCurrentUrl());
@@ -78,7 +85,7 @@ public class FichajeServiceImpl implements FichajeService {
     private void close() {
         log.debug("Closing webdriver");
         if (seleniumDriverInterface.getDriver() != null) {
-            seleniumDriverInterface.getDriver().close();
+            seleniumDriverInterface.getDriver().quit();
         }
     }
 }
