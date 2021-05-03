@@ -2,7 +2,6 @@ package es.avernostudios.shelob.schedulingtasks;
 
 import es.avernostudios.shelob.services.FichajeService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -18,8 +17,12 @@ public class ScheduledTasks implements Runnable {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 
-    @Autowired
+    final
     FichajeService fichajeService;
+
+    public ScheduledTasks(FichajeService fichajeService) {
+        this.fichajeService = fichajeService;
+    }
 
     @Override
     public void run() {

@@ -8,15 +8,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomScheduler {
 
-    @Autowired
     private TaskScheduler taskScheduler;
-
-    @Autowired
     private CronConfig cronConfig;
-
-    @Autowired
     private ScheduledTasks myTask;
 
+    @Autowired
+    public CustomScheduler(TaskScheduler taskScheduler, CronConfig cronConfig, ScheduledTasks scheduledTasks) {
+        this.myTask = scheduledTasks;
+        this.cronConfig = cronConfig;
+        this.taskScheduler = taskScheduler;
+    }
 
     public void scheduleAllCrons() {
 

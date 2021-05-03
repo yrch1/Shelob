@@ -7,7 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ public class FichajeServiceImpl implements FichajeService {
 
     public static final String WEBDRIVER_CHROME_DRIVER = "webdriver.chrome.driver";
 
-    @Autowired
+    final
     SeleniumDriverInterface seleniumDriverInterface;
 
     @Value("${es.avernostudios.username}")
@@ -32,6 +31,10 @@ public class FichajeServiceImpl implements FichajeService {
     String url;
     @Value("${es.avernostudios.isSandbox}")
     boolean isSandbox;
+
+    public FichajeServiceImpl(SeleniumDriverInterface seleniumDriverInterface) {
+        this.seleniumDriverInterface = seleniumDriverInterface;
+    }
 
 
     @PreDestroy
@@ -118,8 +121,6 @@ public class FichajeServiceImpl implements FichajeService {
 
     private void close() {
         log.debug("Closing webdriver");
-        if (seleniumDriverInterface.getDriver() != null) {
-            seleniumDriverInterface.getDriver().quit();
-        }
+        seleniumDriverInterface.close();
     }
 }

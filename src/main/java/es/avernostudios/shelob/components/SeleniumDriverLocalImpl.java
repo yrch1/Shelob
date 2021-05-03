@@ -26,7 +26,9 @@ public class SeleniumDriverLocalImpl implements SeleniumDriverInterface {
 
     @Override
     public void close() {
-        this.driver.quit();
+        if (driver != null) {
+            this.driver.quit();
+        }
     }
 
 }
