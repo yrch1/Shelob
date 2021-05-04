@@ -113,7 +113,7 @@ public class FichajeServiceImpl implements FichajeService {
         } catch (Exception e) {
             log.error("Exception", e);
         } finally {
-            driver.close();
+            driver.quit();
         }
         return result;
     }
