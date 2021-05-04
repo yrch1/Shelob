@@ -68,6 +68,9 @@ public class FichajeServiceImpl implements FichajeService {
         String passwordXpath = "//*[@id=\"body\"]/div[4]/div/input";
         String entrarXpath = "//*[@id=\"body\"]/div[5]/div";
 
+        String segundoFichar = "//*[@id=\"body\"]/div[3]/div";
+        String tercerFichar = "/html/body/div[3]/div[2]/div";
+
         init();
         boolean result = false;
         try {
@@ -88,19 +91,32 @@ public class FichajeServiceImpl implements FichajeService {
             Thread.sleep(5000);
             WebDriverWait wait = new WebDriverWait(driver, 10);
 
-            WebElement salirWebElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(salirXpath)));
 
             WebElement mainActionWebElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(ficharXpath)));
 
-            if (mainActionWebElement != null && salirWebElement != null) {
-                log.info("WebElement {} ", mainActionWebElement.getText());
 
+            if (mainActionWebElement != null) {
+                log.info("WebElement {} ", mainActionWebElement.getText());
 
                 if (!isSandbox) {
                     mainActionWebElement.click();
-                } else {
-                    clickElement(salirWebElement);
+                    Thread.sleep(2000);
+
+                    WebElement secondActionWebElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(segundoFichar)));
+                    secondActionWebElement.click();
+
+                    Thread.sleep(2000);
+
+                    WebElement thirdActionWebElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(tercerFichar)));
+                    thirdActionWebElement.click();
+
                 }
+
+
+                Thread.sleep(1000);
+
+                WebElement salirWebElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(salirXpath)));
+                clickElement(salirWebElement);
 
 
                 result = true;
