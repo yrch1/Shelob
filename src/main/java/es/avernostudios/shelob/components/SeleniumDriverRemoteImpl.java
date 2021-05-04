@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
@@ -17,18 +18,12 @@ import java.util.concurrent.TimeUnit;
 public class SeleniumDriverRemoteImpl implements SeleniumDriverInterface {
     @Value("${es.avernostudios.hubURL}")
     public String hubURL;
-    private RemoteWebDriver driver;
 
     @Override
-    public WebDriver getDriver() {
-        return driver;
-    }
-
-    @Override
-    public void init() {
-
+    public WebDriver getNewDriver() {
+        ChromeOptions options = new ChromeOptions();
+        WebDriver driver = null;
         try {
-            ChromeOptions options = new ChromeOptions();
             driver = new RemoteWebDriver(new URL(hubURL), options);
             driver.manage()
                     .timeouts()
@@ -36,17 +31,10 @@ public class SeleniumDriverRemoteImpl implements SeleniumDriverInterface {
 
             log.info("Connecting to " + hubURL);
 
-        } catch (Exception e) {
+        } catch (MalformedURLException e) {
             log.error("Exception", e);
         }
-
-    }
-
-    @Override
-    public void close() {
-        if (driver != null) {
-            this.driver.quit();
-        }
+        return driver;
     }
 
 

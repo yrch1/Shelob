@@ -10,8 +10,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PreDestroy;
-
 @Service
 @Slf4j
 public class FichajeServiceImpl implements FichajeService {
@@ -36,17 +34,8 @@ public class FichajeServiceImpl implements FichajeService {
         this.seleniumDriverInterface = seleniumDriverInterface;
     }
 
-
-    @PreDestroy
-    public void destroy() {
-        log.debug("Destroying webdriver");
-        if (seleniumDriverInterface.getDriver() != null) {
-            seleniumDriverInterface.getDriver().quit();
-        }
-    }
-
-    public void navigateTo(String url) {
-        seleniumDriverInterface.getDriver().navigate()
+    public void navigateTo(WebDriver driver, String url) {
+        driver.navigate()
                 .to(url);
     }
 
@@ -71,12 +60,11 @@ public class FichajeServiceImpl implements FichajeService {
         String segundoFichar = "//*[@id=\"body\"]/div[3]/div";
         String tercerFichar = "/html/body/div[3]/div[2]/div";
 
-        init();
+        WebDriver driver = seleniumDriverInterface.getNewDriver();
         boolean result = false;
         try {
-            navigateTo(url);
+            navigateTo(driver, url);
 
-            WebDriver driver = seleniumDriverInterface.getDriver();
             WebElement usernameWebElement = driver.findElement(By.xpath(usernameXpath));
             usernameWebElement.clear();
             usernameWebElement.sendKeys(username);
@@ -124,19 +112,9 @@ public class FichajeServiceImpl implements FichajeService {
 
         } catch (Exception e) {
             log.error("Exception", e);
+        } finally {
+            driver.close();
         }
-        close();
         return result;
-    }
-
-    private void init() {
-        if (seleniumDriverInterface != null) {
-            seleniumDriverInterface.init();
-        }
-    }
-
-    private void close() {
-        log.debug("Closing webdriver");
-        seleniumDriverInterface.close();
     }
 }

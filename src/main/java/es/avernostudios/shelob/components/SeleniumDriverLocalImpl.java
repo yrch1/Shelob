@@ -12,23 +12,10 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class SeleniumDriverLocalImpl implements SeleniumDriverInterface {
 
-    private WebDriver driver;
 
     @Override
-    public WebDriver getDriver() {
-        return this.driver;
-    }
-
-    @Override
-    public void init() {
-        driver = new ChromeDriver();
-    }
-
-    @Override
-    public void close() {
-        if (driver != null) {
-            this.driver.quit();
-        }
+    public WebDriver getNewDriver() {
+        return new ChromeDriver();
     }
 
 }
