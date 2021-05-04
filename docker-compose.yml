@@ -20,6 +20,7 @@ services:
       GRID_MAX_SESSION: 16
       GRID_BROWSER_TIMEOUT: 300
       GRID_TIMEOUT: 300
+      TZ: "Europe/Madrid"
     networks:
       - rivendel
 
@@ -33,6 +34,7 @@ services:
       HUB_PORT_4444_TCP_PORT: 4444
       NODE_MAX_SESSION: 4
       NODE_MAX_INSTANCES: 4
+      TZ: "Europe/Berlin"
     volumes:
       - /dev/shm:/dev/shm
     ports:
