@@ -58,7 +58,7 @@ public class FichajeServiceImpl implements FichajeService {
         String entrarXpath = "//*[@id=\"body\"]/div[5]/div";
 
         String segundoFichar = "//*[@id=\"body\"]/div[3]/div";
-        String tercerFichar = "/html/body/div[3]/div[2]/div";
+        String tercerFichar = "/html/body/div[4]/div[2]/div";
 
         WebDriver driver = seleniumDriverInterface.getNewDriver();
         boolean result = false;
