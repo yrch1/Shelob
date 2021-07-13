@@ -45,3 +45,7 @@ services:
 networks:
   rivendel:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.99.0.0/16
