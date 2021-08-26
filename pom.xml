@@ -10,7 +10,7 @@
     </parent>
     <groupId>es.avernostudios</groupId>
     <artifactId>shelob</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>Shelob</name>
     <description>Demo project for Spring Boot</description>
     <properties>

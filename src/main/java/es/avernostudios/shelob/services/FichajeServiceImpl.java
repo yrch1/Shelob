@@ -44,12 +44,19 @@ public class FichajeServiceImpl implements FichajeService {
     }
 
 
+    public static int getRandomIntegerBetweenRange(int min, int max) {
+        int x = (int) (Math.random() * ((max - min) + 1)) + min;
+        return x;
+    }
+
     /**
      *
      */
     @Override
     public boolean work() {
 
+
+        addRandomness();
 
         String usernameXpath = "//*[@id=\"body\"]/div[2]/div/input";
         String salirXpath = "//*[@id=\"body\"]/div[3]";
@@ -116,5 +123,15 @@ public class FichajeServiceImpl implements FichajeService {
             driver.quit();
         }
         return result;
+    }
+
+    private void addRandomness() {
+        try {
+            int aux = getRandomIntegerBetweenRange(0, 4);
+            Thread.sleep(aux * 1000);
+        } catch (InterruptedException e) {
+            log.error("Exception", e);
+            ;
+        }
     }
 }

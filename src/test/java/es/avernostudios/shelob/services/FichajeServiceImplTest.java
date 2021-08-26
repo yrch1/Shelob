@@ -26,4 +26,12 @@ public class FichajeServiceImplTest {
     public void testChrome() {
         assertTrue(fichajeService.work());
     }
+
+    @Test
+    public void getRandomIntegerBetweenRange() {
+        for (int i = 0; i < 100; i++) {
+            int randomIntegerBetweenRange = FichajeServiceImpl.getRandomIntegerBetweenRange(1, 5);
+            assertTrue(randomIntegerBetweenRange >= 1 && randomIntegerBetweenRange <= 5);
+        }
+    }
 }
