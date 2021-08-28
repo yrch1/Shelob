@@ -128,7 +128,7 @@ public class FichajeServiceImpl implements FichajeService {
     private void addRandomness() {
         try {
             int aux = getRandomIntegerBetweenRange(0, 4);
-            Thread.sleep(aux * 1000);
+            Thread.sleep(aux * 60 * 1000);
         } catch (InterruptedException e) {
             log.error("Exception", e);
             ;
