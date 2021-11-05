@@ -11,6 +11,8 @@ services:
     image: yrch1/shelob:latest
     networks:
       - rivendel
+    volumes:
+      - ./conf.d:/opt/shelob/conf.d
   hub:
     container_name: selenium_hub
     image: selenium/hub

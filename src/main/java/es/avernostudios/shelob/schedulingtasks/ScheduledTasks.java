@@ -26,7 +26,7 @@ public class ScheduledTasks implements Runnable {
 
     @Override
     public void run() {
-        log.info("The time is now {}", dateFormat.format(new Date()));
+        LOGGER.info("The time is now {}", dateFormat.format(new Date()));
         fichajeService.work();
     }
 }

@@ -29,10 +29,10 @@ public class SeleniumDriverRemoteImpl implements SeleniumDriverInterface {
                     .timeouts()
                     .implicitlyWait(10, TimeUnit.SECONDS);
 
-            log.info("Connecting to " + hubURL);
+            LOGGER.info("Connecting to " + hubURL);
 
         } catch (MalformedURLException e) {
-            log.error("Exception", e);
+            LOGGER.error("Exception", e);
         }
         return driver;
     }
