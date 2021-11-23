@@ -15,7 +15,7 @@ services:
       - ./conf.d:/opt/shelob/conf.d
   hub:
     container_name: selenium_hub
-    image: selenium/hub
+    image: selenium/hub:3.141
     ports:
       - "4444:4444"
     environment:
@@ -27,7 +27,7 @@ services:
       - rivendel
 
   chrome:
-    image: selenium/node-chrome
+    image: selenium/node-chrome:3.141
     container_name: web-automation_chrome
     depends_on:
       - hub

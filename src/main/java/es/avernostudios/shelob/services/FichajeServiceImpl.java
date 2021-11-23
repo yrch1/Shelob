@@ -175,6 +175,7 @@ public class FichajeServiceImpl implements FichajeService {
     private void addRandomness() {
         try {
             int aux = getRandomIntegerBetweenRange(0, 4);
+            aux = 0;
             Thread.sleep(aux * 60 * 1000);
         } catch (InterruptedException e) {
             LOGGER.error("Exception", e);
